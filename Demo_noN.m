@@ -23,11 +23,9 @@ addpath(genpath('lib'));
 addpath(genpath('data'));
 addpath(genpath('method'));
 addpath(genpath('BM3D-master'));
-addpath(genpath('PROPACK'));
 
 %% load noisy image
-addpath(genpath('noise_dataPavia'));
-load('Pavia_G0.01.mat'); 
+load('Pavia_G0.1.mat'); 
 %% load clean image
 load('cleanPavia.mat');   
 Ohsi=img_clean; 
@@ -38,7 +36,7 @@ if max(Ohsi(:))>1
 end
 
 EN_FRCTR    =1;
-EN_FRCTR_PnP=0;
+EN_FRCTR_PnP=1;
 methodname  = { 'Noise','FRCTR','FRCTR_PnP'};
 Mnum = length(methodname);
 
@@ -58,7 +56,7 @@ Re_hsi{i} = Nhsi;
 i = i+1;
 if EN_FRCTR
     %%%%%
-    for mu1=[1e-2]
+    for mu1=[1e-3]
         for mu2=[1e-2]
             for bet=[mu1]
                 for rho=[1.3]
@@ -84,10 +82,10 @@ end
 i = i+1;
 if EN_FRCTR_PnP
     opts=[];
-    for lam1=[110]
+    for lam1=[250]
         for rho1=[1.5]
             for beta1=[0.1]%0.15,0.1,0.05
-                for beta3=[1e-4]%1e-2,1e-3,1e-4,1e-5
+                for beta3=[1e-3]%1e-2,1e-3,1e-4,1e-5
                     opts.rank=[4,4,110]; %fibered rank
                     opts.lambda1= lam1;  %tuning parameter
                     opts.rho=rho1*[1,1,1,1,1];
